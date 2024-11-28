@@ -1,10 +1,10 @@
-import express from 'express';
-import userController from '../controllers/user.controller';
+// import express from 'express';
+// import userController from '../controllers/user.controller';
 
-const router = express.Router();
+// const router = express.Router();
 
-router.get('/:id', userController.handleGetUserById);
-router.get('/', userController.handleGetAllUsers);
-router.post('/', userController.handleCreateUser);
+// router.get('/:id', userController.handleGetUserById);
+// router.get('/', userController.handleGetAllUsers);
+// router.post('/', userController.handleCreateUser);
 
-export default router;
+// export default router;

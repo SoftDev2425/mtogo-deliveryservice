@@ -13,15 +13,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id       String  @id @default(uuid())
-  email    String  @unique
-  name     String?
-  password String?
+model DeliveryAgent {
+  id               String @id @default(cuid())
+  name             String
+  phone            String
+  email            String @unique
+  regNo            String @unique
+  accountNo        String @unique
+  workingAddressId String @unique
+
+  deliveries     Delivery[]
+  workingAddress WorkingAddress @relation(fields: [workingAddressId], references: [id])
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 }
 
-model TestTable {
-  id    String  @id @default(uuid())
-  name  String?
-  email String?
+model WorkingAddress {
+  id     String          @id @default(cuid())
+  street String
+  city   String
+  zip    String
+  x      Float
+  y      Float
+  agents DeliveryAgent[]
+}
+
+model Delivery {
+  id           String        @id @default(cuid())
+  deliveryTime DateTime
+  orderId      String
+  agent        DeliveryAgent @relation(fields: [agentId], references: [id])
+  agentId      String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }

@@ -2,6 +2,8 @@ import dotenv from 'dotenv';
 import createServer from './utils/server';
 import prisma from '../prisma/client';
 import { handlePopulateDatabase } from './utils/handlePopulateDatabase';
+import startConsumers from './kafka/app';
+import { initializeProducer, shutdownProducer } from './utils/produceEvent';
 
 dotenv.config();
 
@@ -18,9 +20,24 @@ main()
   .then(async () => {
     await prisma.$connect();
     await handlePopulateDatabase();
+    await startConsumers();
+    await initializeProducer();
   })
   .catch(async e => {
     console.error(e);
     await prisma.$disconnect();
+    await shutdownProducer();
     process.exit(1);
   });
+
+process.on('SIGINT', async () => {
+  await prisma.$disconnect();
+  await shutdownProducer();
+  process.exit();
+});
+
+process.on('SIGTERM', async () => {
+  await prisma.$disconnect();
+  await shutdownProducer();
+  process.exit();
+});

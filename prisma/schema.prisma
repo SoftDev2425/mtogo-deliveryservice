@@ -39,11 +39,12 @@ model WorkingAddress {
 }
 
 model Delivery {
-  id           String        @id @default(cuid())
-  deliveryTime DateTime
-  orderId      String
-  agent        DeliveryAgent @relation(fields: [agentId], references: [id])
-  agentId      String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id              String        @id @default(cuid())
+  deliveryTime    DateTime?
+  orderId         String
+  deliveryAddress String
+  agent           DeliveryAgent @relation(fields: [agentId], references: [id])
+  agentId         String
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 }

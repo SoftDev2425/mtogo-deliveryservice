@@ -1,4 +1,4 @@
-import { orderCreatedConsumer } from '../consumers/orderCreatedConsumer';
+import { orderCreatedConsumer } from './consumers/orderCreatedConsumer';
 import { shutdownConsumers } from './consumerManager';
 
 const consumers: { disconnect: () => Promise<void> }[] = [];

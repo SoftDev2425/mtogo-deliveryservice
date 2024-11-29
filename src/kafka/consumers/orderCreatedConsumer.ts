@@ -1,7 +1,7 @@
 import { EachMessagePayload } from 'kafkajs';
-import { createConsumer } from '../kafka/consumerManager';
-import { createDelivery } from '../services/delivery.service';
-import { produceEvent } from '../utils/produceEvent';
+import { createConsumer } from '../consumerManager';
+import { createDelivery } from '../../services/delivery.service';
+import { produceEvent } from '../../utils/produceEvent';
 
 export async function orderCreatedConsumer() {
   const consumer = await createConsumer('deliveryService_emailConsumer');
@@ -42,6 +42,17 @@ export async function orderCreatedConsumer() {
               deliveryAgentName: deliveryAgent.name,
             },
           );
+
+          // simulate 30 seconds delay for delivery
+          produceEvent('orderStatusUpdate', {
+            orderId: event.orderId,
+            status: 'YOUR_FOOD_IS_ON_THE_WAY',
+          });
+
+          produceEvent('orderStatusUpdate', {
+            orderId: event.orderId,
+            status: 'YOUR_FOOD_HAS_BEEN_DELIVERED',
+          });
         }
 
         console.log('Message processed successfully');

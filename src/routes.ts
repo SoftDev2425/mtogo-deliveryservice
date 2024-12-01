@@ -1,4 +1,5 @@
 import { Express, Request, Response } from 'express';
+import DeliveryRouter from './routes/delivery.route';
 
 function routes(app: Express) {
   app.get('/', (_req: Request, res: Response) =>
@@ -10,7 +11,7 @@ function routes(app: Express) {
   );
 
   // Register API routes
-  // app.use('/api/users', UserRouter);
+  app.use('/api/delivery', DeliveryRouter);
 
   // Catch unregistered routes
   app.all('*', (req: Request, res: Response) => {

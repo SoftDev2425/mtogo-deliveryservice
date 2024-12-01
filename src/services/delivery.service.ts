@@ -33,6 +33,7 @@ export async function createDelivery(event: DeliveryEvent) {
     await prisma.delivery.create({
       data: {
         orderId: orderId as string,
+        deliveryTime: new Date(),
         agentId: deliveryAgent.id,
         deliveryAddress: `${deliveryAddress.street || ''}, ${deliveryAddress.city || ''}, ${deliveryAddress.state || ''}, ${deliveryAddress.zip || ''}`,
       },
@@ -43,4 +44,15 @@ export async function createDelivery(event: DeliveryEvent) {
     console.error('Error creating delivery:', error);
     throw error;
   }
+}
+
+export async function getDeliveryByOrderId(orderId: string) {
+  return await prisma.delivery.findFirst({
+    where: {
+      orderId: orderId as string,
+    },
+    include: {
+      agent: true,
+    },
+  });
 }

@@ -49,10 +49,12 @@ export async function orderCreatedConsumer() {
             status: 'YOUR_FOOD_IS_ON_THE_WAY',
           });
 
-          produceEvent('orderStatusUpdate', {
-            orderId: event.orderId,
-            status: 'YOUR_FOOD_HAS_BEEN_DELIVERED',
-          });
+          setTimeout(() => {
+            produceEvent('orderStatusUpdate', {
+              orderId: event.orderId,
+              status: 'YOUR_FOOD_HAS_BEEN_DELIVERED',
+            });
+          }, 3000);
         }
 
         console.log('Message processed successfully');

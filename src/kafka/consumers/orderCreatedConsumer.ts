@@ -43,21 +43,8 @@ export async function orderCreatedConsumer() {
             },
           );
 
-          // simulate 30 seconds delay for delivery
-          produceEvent('orderStatusUpdate', {
-            orderId: event.orderId,
-            status: 'YOUR_FOOD_IS_ON_THE_WAY',
-          });
-
-          setTimeout(() => {
-            produceEvent('orderStatusUpdate', {
-              orderId: event.orderId,
-              status: 'YOUR_FOOD_HAS_BEEN_DELIVERED',
-            });
-          }, 3000);
+          console.log('Message processed successfully');
         }
-
-        console.log('Message processed successfully');
       } catch (error) {
         console.error('Error processing message:', error);
       }

@@ -6,10 +6,6 @@ function routes(app: Express) {
     res.send(`Hello from MTOGO: Test Service!`),
   );
 
-  app.get('/healthcheck', (_req: Request, res: Response) =>
-    res.sendStatus(200),
-  );
-
   // Register API routes
   app.use('/api/delivery', DeliveryRouter);
 
